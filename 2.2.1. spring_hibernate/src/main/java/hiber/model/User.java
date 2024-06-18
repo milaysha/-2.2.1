@@ -1,5 +1,7 @@
 package hiber.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +9,7 @@ import javax.persistence.*;
 public class User {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.AUTO)
    private Long id;
 
    @Column(name = "name")
@@ -19,12 +21,19 @@ public class User {
    @Column(name = "email")
    private String email;
 
-   public User() {}
-   
+   @OneToOne(cascade = CascadeType.DETACH)
+   @JoinColumn(name = "car_id", referencedColumnName = "id")
+   private Car car;
+
+
    public User(String firstName, String lastName, String email) {
       this.firstName = firstName;
       this.lastName = lastName;
       this.email = email;
+   }
+
+   public User() {
+
    }
 
    public Long getId() {
@@ -57,5 +66,13 @@ public class User {
 
    public void setEmail(String email) {
       this.email = email;
+   }
+
+   public Car getCar() {
+      return car;
+   }
+
+   public void setCar(Car car) {
+      this.car = car;
    }
 }
