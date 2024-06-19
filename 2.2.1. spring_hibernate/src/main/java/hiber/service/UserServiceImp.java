@@ -36,20 +36,10 @@ public class UserServiceImp implements UserService {
     }
 
     public User getUserByCarModelAndSeries(String carModel, String carSeries) throws SQLException {
-        try (Session session = sessionFactory.openSession()) {
-            String hql = "SELECT u\n" +
-                    "FROM User u\n" +
-                    "JOIN u.car c\n" +
-                    "WHERE c.model = :carModel\n" +
-                    "AND c.series = :carSeries";
-            Query query = session.createQuery(hql);
-            query.setParameter("carModel", carModel);
-            query.setParameter("carSeries", carSeries);
-            List<User> users = query.list();
-            return users.get(0);
-        }
+        return userDao.getUserByCarModelAndSeries(carModel, carSeries);
     }
 }
+
 
 
 
